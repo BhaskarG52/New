@@ -1,0 +1,149 @@
+<-------------------------------Java 8 Features----------------------->
+
+
+1. forEach()
+
+forEach(): method is used to iterate the elements. It takes a single parameter. It is a default method of the Iterable interface. We can pass lambda expressions as an argument.
+
+public class ForEachExample { 
+    public static void main(String[] args) {  
+        List<String> list = new ArrayList<String>();  
+        list.add("One");  
+        list.add("Two);  
+        list.add("Three");  
+        list.add("Four");  
+        list.forEach(li -> System.out.println(li));  
+    }  
+}
+ 
+2. Functional Interfaces and Lambda Expressions
+
+Functional Interface
+
+The Functional interface contains only one abstract method and also contains a number of default and static methods. Functional Interface is annotated by @FunctionalInterface annotation, it ensures that the interface contains only one abstract method. Some predefined functional interfaces are: Runnable, Comparable, and ActionListener. 
+
+Lambda Expression
+
+Lambda expressions provide the simplest and shortest way to define anonymous functions.  Java Swing frequently uses anonymous functions for event handling. Lambda expressions define the body of Functional Interfaces. Lambda expression introduces a new operator in Java called the 
+ARROW ( -> )   operator. 
+
+See http://blog.sunilos.com/2020/05/lambda-expressions.html
+
+3. Default and Static methods in Interfaces
+
+Before JDK 1.8, interfaces can have only abstract methods. From JDK 1.8 interfaces can have default and static methods too. The reason we have default methods in interfaces is to allow the developers to add new methods to the interfaces without affecting the classes that implement these interfaces.
+
+interface FunctInt {
+    public void say();
+    public static void show(){}
+    public default void display(){}
+}
+
+4. Java Stream
+
+For sequential and parallel operation with collection usually with huge amounts of data, to perform filter/map/reduce like operations, java 8 introduces a new feature Stream API that exists in java.util.stream package which provides bulk operations on collections such as sequential or parallel map-reduce transformation.
+
+List<Integer> list = new ArrayList<Integer>(); 
+for(int i = 1; i< 10; i++){
+   list.add(i);
+}
+Stream<Integer> stream = list.stream();
+stream.forEach(p -> System.out.println(p);
+
+Two special methods to generate a stream :
+
+stream() −  returns sequential stream on collection.
+
+parallelStream() − returns parallel stream on collection.
+
+See http://blog.sunilos.com/2020/05/java-streams-api-process-set-of-elements.html
+
+5. Parallel Sort
+
+To sort array elements parallel Java provides new method parallelSort() in java.util.Arrays package
+Int[] arr = {2,3,5,1,0,8,6,4,8};
+Arrays.parallelSort(arr);
+
+
+<--------------------------Java 9 Features------------------------>
+
+
+1. JShell(REPL)
+
+JShell is a Read-Evaluate-Print Loop (REPL): For interactive mode and immediate result, Java added JShell from JDK 9, by that we can immediately evaluate the result and make the changes as needed.
+
+G:\>jshell
+|  Welcome to JShell -- Version 9-ea
+|  For an introduction type: /help intro
+   jshell> int a = 10
+   a ==> 10
+   jshell> System.out.println("a value = " + a )
+   a value = 1
+
+2. Private Methods in Interfaces
+
+For sharing the common code between two default methods or non-abstract methods Java 9 introduced “Private Methods”.Private methods cannot be overridden in implementation classes and private methods cannot be abstract.
+
+public interface MyInterface {
+    default void methodFirst(){
+        init();
+    }
+    default void methodSecond(){ 
+        init();
+    }
+    private void init(){
+        System.out.println("Initializing"); 
+    }
+}
+
+3. Try With Resources Improvement
+
+We can not declare the resources outside the try-with-resource before Java 9.
+FileOutputStream file = new FileOutputStream("path");  
+try(file){....}
+But after Java 9 we can use the resources that are not declared locally.
+
+4. Factory Methods for Immutable List, Set, Map and Map Entry
+Java 9 provides us a new feature called Factory Method that creates Immutable or you can say an unmodified small collection of List, Set, and Map.
+
+Factory method for
+List - List.of()
+	 List<String> list = List.of(“One”,”Two”,”Three”,”Four”,”Five”); 
+Set - Set.of()
+	Set<String> set = Set.of(“One”,”Two”,”Three”,”Four”,”Five”);
+Map - Map.of() and Map.ofEntries()
+	Map<Integer,String>map=Map.of(1,"One",2,"Two",3,"Three");
+
+5. <>(Diamond) operator Enhancement
+Now in Java 9, we can use diamond operators with anonymous classes that were not allowed in Java 7.
+
+abstract class TestAnnoy<T>{  
+    abstract T show(T a, T b);  
+}  
+
+public class AnnoyExample {  
+    public static void main(String[] args) {  
+        TestAnnoy<String> a = new TestAnnoy<String>() { 
+        String show(String a, String b) {  
+        return a+b;   
+        }  
+    };    
+    String result = a.show("Java","9");  
+    System.out.println(result);  
+    }  
+}
+
+6. JLink(Java Linker/Custom JRE)
+
+Wow! Now from Java 9, we can create our own custom JRE to execute small programs on our system. Till now we have to use the default JRE that is provided by Java.
+
+What is the problem with default JRE is if we are running a small program in java like program to print Hello Java we need only 4 to 5 .classes to run that program but default JRE runs 4300+ classes to run a simple program.
+
+Jlink allows us to link sets of only required modules to create a runtime image (our own JRE).
+
+7. Underscore(_) Keyword
+
+From Java 9 we cannot use underscore (_) as an identifier, now it becomes a keyword in Java 9, if we add it as identifier it will throw a compile-time error.
+
+
+
